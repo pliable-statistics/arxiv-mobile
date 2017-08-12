@@ -95,6 +95,8 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
     public static final int SHARE_ID = Menu.FIRST + 1;
     public static final int INCREASE_ID = Menu.FIRST + 2;
     public static final int DECREASE_ID = Menu.FIRST + 3;
+    public static final int UPVOTE_ID = Menu.FIRST + 4;
+
 
     private Handler handlerNoViewer = new Handler() {
         @Override
@@ -154,7 +156,16 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
             droidDB.changeSize(fontSize);
             droidDB.close();
             return (true);
+        case UPVOTE_ID:
+            // put current article into the database
+            // add text and url to database
+            droidDB = new arXivDB(thisActivity);
+            droidDB.insertFavorites(title, pdfPath);
+            droidDB.close();
+
+            return (true);
         }
+
         return (false);
     }
 
@@ -281,6 +292,7 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
         menu.add(Menu.NONE, SHARE_ID, Menu.NONE, R.string.share);
         menu.add(Menu.NONE, INCREASE_ID, Menu.NONE, "Increase Font");
         menu.add(Menu.NONE, DECREASE_ID, Menu.NONE, "Decrease Font");
+        menu.add(Menu.NONE, UPVOTE_ID, Menu.NONE, "Upvote the article");
     }
 
     public void pressedPDFButton(View button) {
@@ -344,65 +356,73 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
                             });
 
                             String pdfaddress = link.replace("abs", "pdf");
-
                             URL u = new URL(pdfaddress);
-                            HttpURLConnection c = (HttpURLConnection) u
-                                    .openConnection();
-                            c.setRequestMethod("GET");
-                            //c.setDoOutput(true);
-                            c.connect();
-
-                            final long ifs = c.getContentLength();
-                            InputStream in = c.getInputStream();
-
-                            String filepath = pdfPath;
-
-                            String filename = title.replace(":", "");
-                            filename = filename.replace("?", "");
-                            filename = filename.replace("*", "");
-                            filename = filename.replace("/", "");
-                            filename = filename.replace(". ", "");
-                            filename = filename.replace("`", "");
-                            filename = filename + ".pdf";
-
+                            String paperFilePath;
                             Boolean vdownload = true;
-                            File futureFile = new File(filepath, filename);
-                            if (futureFile.exists()) {
-                                final long itmp = futureFile.length();
-                                if (itmp == ifs && itmp != 0) {
-                                    vdownload = false;
-                                }
+                            try {
+                                paperFilePath = Utils.downloadFile(pdfaddress,
+                                        pdfPath, title, vLoop, progBar);
                             }
-
-                            if (vdownload) {
-                                FileOutputStream f = new FileOutputStream(
-                                        new File(filepath, filename));
-
-                                byte[] buffer = new byte[1024];
-                                int len1 = 0;
-                                long i = 0;
-                                while ((len1 = in.read(buffer)) > 0) {
-                                    if (vLoop == false) {
-                                        break;
-                                    }
-                                    f.write(buffer, 0, len1);
-                                    i += len1;
-                                    long jt = 100 * i / ifs;
-                                    final int j = (int) jt;
-                                    progBar.post(new Runnable() {
-                                        public void run() {
-                                            progBar.setProgress(j);
-                                        }
-                                    });
-                                }
-                                f.close();
-                            } else {
-                                progBar.post(new Runnable() {
-                                    public void run() {
-                                        progBar.setProgress(100);
-                                    }
-                                });
+                            catch (Exception e) {
+                                Log.d("arxiv","error "+e);
+                                vdownload = false;
+                                paperFilePath = "";
                             }
+                            File articleFile = new File(paperFilePath);
+                            String filepath = articleFile.getAbsolutePath();
+                            String filename = articleFile.getName();
+
+//                            HttpURLConnection c = (HttpURLConnection) u
+//                                    .openConnection();
+//                            c.setRequestMethod("GET");
+//                            //c.setDoOutput(true);
+//                            c.connect();
+//
+//                            final long ifs = c.getContentLength();
+//                            InputStream in = c.getInputStream();
+//
+//                            String filepath = pdfPath;
+//
+//                            String filename = Utils.removeSomeCharacters(title);
+//
+//                            Boolean vdownload = true;
+//                            File futureFile = new File(filepath, filename);
+//                            if (futureFile.exists()) {
+//                                final long itmp = futureFile.length();
+//                                if (itmp == ifs && itmp != 0) {
+//                                    vdownload = false;
+//                                }
+//                            }
+//
+//                            if (vdownload) {
+//                                FileOutputStream f = new FileOutputStream(
+//                                        new File(filepath, filename));
+//
+//                                byte[] buffer = new byte[1024];
+//                                int len1 = 0;
+//                                long i = 0;
+//                                while ((len1 = in.read(buffer)) > 0) {
+//                                    if (vLoop == false) {
+//                                        break;
+//                                    }
+//                                    f.write(buffer, 0, len1);
+//                                    i += len1;
+//                                    long jt = 100 * i / ifs;
+//                                    final int j = (int) jt;
+//                                    progBar.post(new Runnable() {
+//                                        public void run() {
+//                                            progBar.setProgress(j);
+//                                        }
+//                                    });
+//                                }
+//                                f.close();
+//                            } else {
+//                                progBar.post(new Runnable() {
+//                                    public void run() {
+//                                        progBar.setProgress(100);
+//                                    }
+//                                });
+//                            }
 
                             if (vLoop) {
                                 if (vdownload) {

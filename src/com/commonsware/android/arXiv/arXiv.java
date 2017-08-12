@@ -93,6 +93,8 @@ public class arXiv extends Activity implements AdapterView.OnItemClickListener {
     public static final int CLEAR_ID = Menu.FIRST + 3;
     public static final int PREF_ID = Menu.FIRST + 4;
     public static final int DONATE_ID = Menu.FIRST + 5;
+    public static final int FAVORITE_ID = Menu.FIRST + 6;
+
     private List<Feed> favorites;
     private List<History> historys;
 
@@ -357,6 +359,10 @@ public class arXiv extends Activity implements AdapterView.OnItemClickListener {
             return (true);
         case PREF_ID:
             startActivity(new Intent(this, EditPreferences.class));
+            return (true);
+        case FAVORITE_ID:
+            Intent favoriteIntent = new Intent(this, HistoryWindow.class);
+            startActivity(favoriteIntent);
             return (true);
         case DONATE_ID:
             Intent goToMarket = null;
@@ -845,6 +851,7 @@ public class arXiv extends Activity implements AdapterView.OnItemClickListener {
     private void populateMenu(Menu menu) {
         menu.add(Menu.NONE, ABOUT_ID, Menu.NONE, R.string.about_arxiv_droid);
         menu.add(Menu.NONE, HISTORY_ID, Menu.NONE, R.string.view_history);
+        menu.add(Menu.NONE, FAVORITE_ID, Menu.NONE, "Favorite articles");
         menu.add(Menu.NONE, CLEAR_ID, Menu.NONE, R.string.clear_history);
         menu.add(Menu.NONE, PREF_ID, Menu.NONE, R.string.preferences);
         menu.add(Menu.NONE, DONATE_ID, Menu.NONE, R.string.donate);

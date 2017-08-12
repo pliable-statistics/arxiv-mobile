@@ -40,9 +40,13 @@ public class arXivDB {
             + "displaytext text not null, url text not null);";
     private static final String CREATE_TABLE_FONTSIZE = "create table if not exists fontsize (fontsize_id integer primary key autoincrement, "
             + "fontsizeval integer not null);";
+    private static final String CREATE_TABLE_FAVORITE_ARTICLES = "create table if not exists favorite_articles (item_id integer primary key autoincrement, "
+            + "displaytext text not null, url text not null);";
     private static final String FEEDS_TABLE = "feeds";
     private static final String HISTORY_TABLE = "history";
     private static final String FONTSIZE_TABLE = "fontsize";
+    private static final String FAVORITE_ARTICLES_TABLE = "favorite_articles";
+
     private static final String DATABASE_NAME = "arXiv-V3";
     //private static final int DATABASE_VERSION = 1;
 
@@ -57,6 +61,7 @@ public class arXivDB {
             db.execSQL(CREATE_TABLE_HISTORY);
             db.execSQL(CREATE_TABLE_FEEDS);
             db.execSQL(CREATE_TABLE_FONTSIZE);
+            db.execSQL(CREATE_TABLE_FAVORITE_ARTICLES);
         } catch (Exception e) {
         }
 
@@ -203,6 +208,14 @@ public class arXivDB {
         values.put("displaytext", displaytext);
         values.put("url", url);
         return (db.insert(HISTORY_TABLE, null, values) > 0);
+    }
+
+    public boolean insertFavorites(String displaytext, String url){
+        ContentValues values = new ContentValues();
+        values.put("displaytext", displaytext);
+        values.put("url", url);
+        return (db.insert(FAVORITE_ARTICLES_TABLE, null, values) > 0);
+
     }
 
 }
