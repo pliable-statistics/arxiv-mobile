@@ -64,7 +64,7 @@ public class FavoriteWindow extends ListActivity {
         header.setText("Favorite articles");
 
         droidDB = new arXivDB(this);
-        historys = droidDB.getHistory();
+        historys = droidDB.getFavorites();
         droidDB.close();
 
         List<String> lhistory = new ArrayList<String>();
@@ -165,15 +165,15 @@ public class FavoriteWindow extends ListActivity {
         }
 
         droidDB = new arXivDB(this);
-        historys = droidDB.getHistory();
+        historys = droidDB.getFavorites();
 
         for (History history : historys) {
-            droidDB.deleteHistory(history.historyId);
+            droidDB.deleteFavorites(history.historyId);
         }
         droidDB.close();
 
         droidDB = new arXivDB(this);
-        historys = droidDB.getHistory();
+        historys = droidDB.getFavorites();
         droidDB.close();
 
         List<String> lhistory = new ArrayList<String>();

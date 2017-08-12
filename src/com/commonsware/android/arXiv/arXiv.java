@@ -361,7 +361,7 @@ public class arXiv extends Activity implements AdapterView.OnItemClickListener {
             startActivity(new Intent(this, EditPreferences.class));
             return (true);
         case FAVORITE_ID:
-            Intent favoriteIntent = new Intent(this, HistoryWindow.class);
+            Intent favoriteIntent = new Intent(this, FavoriteWindow.class);
             startActivity(favoriteIntent);
             return (true);
         case DONATE_ID:

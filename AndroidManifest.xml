@@ -39,7 +39,9 @@
         <activity android:name="PrintDialogActivity" /> 
         <activity android:name="HistoryWindow" 
 		  android:configChanges="keyboardHidden|orientation" />
-        <activity android:name="SingleItemWindow" 
+        <activity android:name=".FavoriteWindow"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="SingleItemWindow"
                   android:hardwareAccelerated="true"
 		  android:configChanges="keyboardHidden|orientation" />
         <activity android:name="EditPreferences"

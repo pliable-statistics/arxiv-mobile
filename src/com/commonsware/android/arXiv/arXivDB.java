@@ -107,6 +107,12 @@ public class arXivDB {
                 null) > 0);
     }
 
+    public boolean deleteFavorites(Long historyId) {
+        return (db.delete(FAVORITE_ARTICLES_TABLE, "history_id=" + historyId.toString(),
+                null) > 0);
+    }
+
+
     public List<Feed> getFeeds() {
         ArrayList<Feed> feeds = new ArrayList<Feed>();
         try {
@@ -159,6 +165,33 @@ public class arXivDB {
         } catch (SQLException e) {
         }
         return historys;
+    }
+
+    public List<History> getFavorites() {
+        ArrayList<History> favoriteArticles = new ArrayList<History>();
+
+        try {
+
+            Cursor c = db.query(FAVORITE_ARTICLES_TABLE, new String[] { "item_id",
+                    "displaytext", "url" }, null, null, null, null, null);
+
+            int numRows = c.getCount();
+            c.moveToFirst();
+
+            for (int i = 0; i < numRows; ++i) {
+                History history = new History(); // TODO refactor this to article list
+                history.historyId = c.getLong(0);
+                history.displayText = c.getString(1);
+                history.url = c.getString(2);
+                favoriteArticles.add(history);
+                c.moveToNext();
+            }
+
+            c.close();
+
+        } catch (SQLException e) {
+        }
+        return favoriteArticles;
     }
 
     public int getSize() {
