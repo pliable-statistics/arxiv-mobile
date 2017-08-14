@@ -372,58 +372,6 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
                             String filepath = articleFile.getParent();
                             String filename = articleFile.getName();
 
-//                            HttpURLConnection c = (HttpURLConnection) u
-//                                    .openConnection();
-//                            c.setRequestMethod("GET");
-//                            //c.setDoOutput(true);
-//                            c.connect();
-//
-//                            final long ifs = c.getContentLength();
-//                            InputStream in = c.getInputStream();
-//
-//                            String filepath = pdfPath;
-//
-//                            String filename = Utils.removeSomeCharacters(title);
-//
-//                            Boolean vdownload = true;
-//                            File futureFile = new File(filepath, filename);
-//                            if (futureFile.exists()) {
-//                                final long itmp = futureFile.length();
-//                                if (itmp == ifs && itmp != 0) {
-//                                    vdownload = false;
-//                                }
-//                            }
-//
-//                            if (vdownload) {
-//                                FileOutputStream f = new FileOutputStream(
-//                                        new File(filepath, filename));
-//
-//                                byte[] buffer = new byte[1024];
-//                                int len1 = 0;
-//                                long i = 0;
-//                                while ((len1 = in.read(buffer)) > 0) {
-//                                    if (vLoop == false) {
-//                                        break;
-//                                    }
-//                                    f.write(buffer, 0, len1);
-//                                    i += len1;
-//                                    long jt = 100 * i / ifs;
-//                                    final int j = (int) jt;
-//                                    progBar.post(new Runnable() {
-//                                        public void run() {
-//                                            progBar.setProgress(j);
-//                                        }
-//                                    });
-//                                }
-//                                f.close();
-//                            } else {
-//                                progBar.post(new Runnable() {
-//                                    public void run() {
-//                                        progBar.setProgress(100);
-//                                    }
-//                                });
-//                            }
-
                             if (vLoop) {
                                 final File file = new File(filepath, filename);
 
