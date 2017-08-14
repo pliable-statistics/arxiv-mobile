@@ -292,7 +292,7 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
         menu.add(Menu.NONE, SHARE_ID, Menu.NONE, R.string.share);
         menu.add(Menu.NONE, INCREASE_ID, Menu.NONE, "Increase Font");
         menu.add(Menu.NONE, DECREASE_ID, Menu.NONE, "Decrease Font");
-        menu.add(Menu.NONE, UPVOTE_ID, Menu.NONE, "Upvote the article");
+        menu.add(Menu.NONE, UPVOTE_ID, Menu.NONE, "Add to favorites");
     }
 
     public void pressedPDFButton(View button) {
