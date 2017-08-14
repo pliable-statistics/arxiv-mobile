@@ -369,7 +369,7 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
                                 paperFilePath = "";
                             }
                             File articleFile = new File(paperFilePath);
-                            String filepath = articleFile.getAbsolutePath();
+                            String filepath = articleFile.getParent();
                             String filename = articleFile.getName();
 
 //                            HttpURLConnection c = (HttpURLConnection) u
@@ -425,6 +425,8 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
 //                            }
 
                             if (vLoop) {
+                                final File file = new File(filepath, filename);
+
                                 if (vdownload) {
                                     droidDB = new arXivDB(thisActivity);
                                     String displaytext = title;
@@ -432,12 +434,9 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
                                         displaytext = displaytext + " - "
                                                 + authors[i];
                                     }
-                                    droidDB.insertHistory(displaytext, filepath
-                                            + filename);
+                                    droidDB.insertHistory(displaytext, file.getAbsolutePath());
                                     droidDB.close();
                                 }
-
-                                final File file = new File(filepath + filename);
 
                                 fileSizeTextView.post(new Runnable() {
                                 public void run() {
