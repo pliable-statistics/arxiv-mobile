@@ -40,6 +40,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -537,7 +538,9 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
         titleTextView.setText(title);
         titleTextView.setTextSize(fontSize);
         titleTextView.setPadding(5, 5, 5, 5);
-        titleTextView.setTextColor(0xffffffff);
+        //titleTextView.setTextColor(0xffffffff);
+
+        titleTextView.setTextColor(Color.WHITE);
 
         try {
             linLay.removeAllViews();
@@ -591,6 +594,8 @@ public class SingleItemWindow extends Activity implements View.OnClickListener {
                 View blankview1 = new View(this);
                 View blankview2 = new View(this);
                 rulerin.setBackgroundColor(0xFF3f3b3b);
+                //rulerin.setBackgroundColor(Color.GREEN);
+
                 //blankview.setPadding(5,5,5,5);
                 linLay.addView(blankview1, new LayoutParams(320, 2));
                 linLay.addView(rulerin, new LayoutParams(320, 1));
